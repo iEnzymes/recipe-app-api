@@ -5,7 +5,7 @@ from django.db.utils import OperationalError
 from django.test import TestCase
 
 
-class CommandTests(TestCase):
+class CommandsTestCase(TestCase):
 
     def test_wait_for_db_ready(self):
         """Test waiting for db when db is available"""
@@ -19,5 +19,5 @@ class CommandTests(TestCase):
         """Test waiting for db"""
         with patch('django.db.utils.ConnectionHandler.__getitem__') as gi:
             gi.sideEffect = [OperationalError] * 5 + [True]
-            call_command('wait_for_db') 
+            call_command('wait_for_db')
             self.assertEqual(gi.call_count, 6)
